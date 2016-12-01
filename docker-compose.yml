@@ -1,0 +1,7 @@
+sftp:
+    image: atmoz/sftp
+    volumes:
+        - /mnt/sftp:/home/taykey/share
+    ports:
+        - "10022:22"
+    command: taykey:taykey:1001:1001
