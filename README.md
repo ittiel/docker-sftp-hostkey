@@ -9,11 +9,13 @@ SFTP configuration (used originally for the grapeshot integration project
 ### How do I get set up? ###
 
 Prerequisites:
-* Docker
-* docker-compose
+1. docker
+2. docker-compose
 
 run docker-compose deom the docker-compsoe.yml folder
 
+SFTP connection: 
+sftp -P 10022 -i ~/.ssh/id_rsa taykey@<IP Address>
 
 ### Contribution guidelines ###
 
