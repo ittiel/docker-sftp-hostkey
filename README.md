@@ -19,7 +19,7 @@ Optional:
 
 ####SFTP server configuration ####
 1. Generate rsa key (local) on the hosting server (one time configuration):      
-ssh-keygen -t rsa -b 4096 -f /etc/ssh/ssh_host_rsa_key 
+ssh-keygen -t rsa -b 4096 -f /etc/ssh/ssh_host_rsa_key     
       passphrase: taykey
 2. Run the docker with Taykey configuration:    
 docker run -v /home/ubuntu/.ssh/ssh_host_rsa_key.pub:/home/taykey/.ssh/keys/id_rsa.pub:ro -p 10022:22 -d 10.20.22.31:5000/taykey-sftp taykey:taykey:1001::taykey    
