@@ -1,21 +1,35 @@
 # README #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+Taykey is transferring files to grapeshot using SFTP (grapeshot configuration)   
+In order to replicate this behaviour on our staging environment we configured a sftp server running on docker.   
+The dockerfile creates a taykey customized image to support hostkey and passphrase connection
+to the sftp as done with Grapeshot.
 
-### What is this repository for? ###
+###Base docker image
+https://github.com/atmoz/sftp
 
-SFTP configuration (used originally for the grapeshot integration project
 
 ### How do I get set up? ###
 
 Prerequisites:
-1. docker
-2. docker-compose
+- docker
+ 
+Optional:
+- Python (to test the configuration)
 
-run docker-compose deom the docker-compsoe.yml folder
+####SFTP server configuration ####
+1. Generate rsa key (local) on the hosting server (one time configuration): 
+*     ssh-keygen -t rsa -b 4096 -f /etc/ssh/ssh_host_rsa_key 
+      passphrase: taykey
+2. Run the docker with Taykey configuration:
+*     docker run -v /home/ubuntu/.ssh/ssh_host_rsa_key.pub:/home/taykey/.ssh/keys/id_rsa.pub:ro -v  /home/taykey/share:/home/taykey/:rw -p 10022:22 -d atmoz/sftp taykey:users:1001
 
-SFTP connection: 
-sftp -P 10022 -i ~/.ssh/id_rsa taykey@<IP Address>
+#### SFTP clients configuration ####
+1. Copy the certificate from the server to your testing machine:
+*     scp -i <certificate for Taykey production> -r ubuntu@10.20.3.209:~/.ssh/ssh_host_rsa_key ~/.ssh/ssh_host_rsa_key
+2. Command line connection properties for staging
+*     sftp -v -P10022 -i ~/.ssh/ssh_host_rsa_key taykey@10.20.3.209
+      passphrase: taykey
 
 ### Contribution guidelines ###
 
@@ -24,5 +38,4 @@ sftp -P 10022 -i ~/.ssh/id_rsa taykey@<IP Address>
 * Other guidelines
 
 ### Who do I talk to? ###
-
-lmgtfy.com
+[See further details](www.google.com)
