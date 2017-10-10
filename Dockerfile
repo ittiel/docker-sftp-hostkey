@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y \
 COPY rsyslog.conf /etc/rsyslog.d/sftp.conf
 
 #replace the line
-RUN sed -i "s/ForceCommand internal-sftp/ForceCommand internal-sftp -d \/taykey -l INFO/" /etc/ssh/sshd_config
+RUN sed -i "s/ForceCommand internal-sftp/ForceCommand internal-sftp -d \/sftp-user -l INFO/" /etc/ssh/sshd_config
 
 #enable auditing
 RUN sed -i "s/#LogLevel VERBOSE/LogLevel DEBUG/" /etc/ssh/sshd_config

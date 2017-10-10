@@ -15,7 +15,7 @@ AllowTcpForwarding no
 
 # Force sftp and chroot jail
 Subsystem sftp internal-sftp
-ForceCommand internal-sftp -d /taykey -l INFO
+ForceCommand internal-sftp -d /sftp-user -l INFO
 ChrootDirectory %h
 
 # Enable this for more logs
