@@ -4,6 +4,7 @@ Taykey is transferring files to grapeshot using SFTP (grapeshot configuration)
 In order to replicate this behaviour on our staging environment we configured a sftp server running on docker.   
 The dockerfile creates a taykey customized image to support hostkey and passphrase connection
 to the sftp as done with Grapeshot.
+Includes auditing (log on /var/log/sftp.log)
 
 ###Base docker image
 https://github.com/atmoz/sftp
@@ -31,7 +32,14 @@ scp -i <certificate for Taykey production> -r ubuntu@10.20.3.209:~/.ssh/ssh_host
     sftp -v -P10022 -i ~/.ssh/ssh_host_rsa_key taykey@10.20.3.209    
       passphrase: taykey
 
-### Contribution guidelines ###
+###Development
+docker build -t taykey-sftp .
+docker tag <image id> 10.20.22.31:5000/taykey-sftp
+docker push 10.20.22.31:5000/taykey-sftp
+docker pull 10.20.22.31:5000/taykey-sftp
+docker run --restart always  -v /home/ubuntu/.ssh/ssh_host_rsa_key.pub:/home/taykey/.ssh/keys/id_rsa.pub:ro -p 10022:22 -d 10.20.22.31:5000/taykey-sftp taykey:taykey:1001::taykey
+
+### Still todo: ###
 
 * Writing tests
 * Code review
